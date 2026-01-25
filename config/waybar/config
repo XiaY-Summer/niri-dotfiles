@@ -32,7 +32,7 @@
   "custom/logo": {
     "format": "  ",        // 显示的文字或图标。你可以去 NerdFonts 网站找个喜欢的图标换上
     "tooltip": false,        // 鼠标放上去是否显示提示框 (false代表关闭)
-    "on-click": "~/.local/bin/run.sh"     // 点击左键执行的命令 (这里是打开应用启动器 fuzzel)
+    "on-click": "~/.config/waybar/scripts/run.sh"     // 点击左键执行的命令 (这里是打开应用启动器 fuzzel)
   },
 
   "niri/workspaces": {
