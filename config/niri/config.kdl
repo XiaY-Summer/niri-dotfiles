@@ -270,7 +270,7 @@ layout {
 // This line starts waybar, a commonly used bar for Wayland compositors.
 spawn-at-startup "waybar"
 spawn-at-startup "swww-daemon"
-spawn-at-startup "sh -c 'sleep 1 && swww img /home/cat/.config/niri/wallhaven/wall.jpg'"
+spawn-at-startup "sh -c 'sleep 1 && swww img ~/.config/niri/wallhaven/wall.jpg'"
 spawn-at-startup "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
 spawn-at-startup "sh -c '/usr/bin/ethtool -s enp8s0 wol g'"
 
@@ -369,7 +369,7 @@ binds {
     // Suggested binds for running programs: terminal, app launcher, screen locker.
     Mod+Return hotkey-overlay-title="Open a Terminal: kitty" { spawn "kitty"; }
     // Mod+D hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
-    Mod+D hotkey-overlay-title="Run an Application: fuzzel" { spawn "~/.local/bin/run.sh"; } 
+    Mod+D hotkey-overlay-title="Run an Application: fuzzel" { spawn "~/.config/niri/scripts/run.sh"; } 
     Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
     Mod+E hotkey-overlay-title="Run an Application: yazi" { spawn "kitty" "-e" "yazi"; }
     Mod+B hotkey-overlay-title="Run an Application: firefox" { spawn "firefox"; }
