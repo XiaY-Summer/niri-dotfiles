@@ -1,0 +1,29 @@
+# 位置
+anchor=top-right
+margin=20
+padding=15
+
+# 尺寸
+width=420
+height=200
+
+# 圆角和边框
+border-size=2
+border-radius=12
+
+# 字体
+font=JetBrains Mono 11
+
+# 颜色（暗色半透明，偏 GNOME/Hyprland 风）
+background-color=#1e1e2edd
+text-color=#cdd6f4ff
+border-color=#89b4faff
+progress-color=over #89b4fa
+
+# 超时
+default-timeout=5000
+
+# 图标
+icon-location=left
+max-icon-size=64
+

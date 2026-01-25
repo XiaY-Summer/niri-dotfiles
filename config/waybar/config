@@ -1,0 +1,158 @@
+{
+  // ========== 全局设置 ==========
+  "layer": "top",       // 显示位置：top(顶部) 或 bottom(底部)
+  "position": "top",    // 停靠位置
+  "height": 45,         // 高度：如果觉得条太宽，可以减小这个值 (例如 30)
+  "margin": "7 20 -7 20", // 边距：上 右 下 左 (顺时针方向)。这里代表顶部留10px空隙，左右各留20px
+  "spacing": 0,         // 模块之间的默认间距
+
+  // ========== 模块排列 ==========
+  // 想要调整模块顺序？只需要在这里移动字符串的位置即可
+  "modules-left": [
+    "custom/logo",      // Arch 图标
+    "niri/workspaces",  // 工作区 (圆点)
+    "cpu",              // CPU 占用
+    "memory"            // 内存占用
+  ],
+  "modules-center": [
+    "mpris",            // 音乐控制 (放在时钟前面)
+    "clock"             // 时钟
+  ],
+  "modules-right": [
+    "group/tray-drawer", // 托盘图标折叠抽屉
+    "pulseaudio",        // 音量
+    "backlight",         // 亮度
+    "network",           // 网络
+    "battery",           // 电池
+    "custom/power"       // 关机按钮
+  ],
+
+  // ========== 左侧模块配置 ==========
+
+  "custom/logo": {
+    "format": "  ",        // 显示的文字或图标。你可以去 NerdFonts 网站找个喜欢的图标换上
+    "tooltip": false,        // 鼠标放上去是否显示提示框 (false代表关闭)
+    "on-click": "/home/cat/.local/bin/run.sh"     // 点击左键执行的命令 (这里是打开应用启动器 fuzzel)
+  },
+
+  "niri/workspaces": {
+    "format": "{icon}",      // 格式：只显示图标
+    "format-icons": {
+      "active": "",         // [修改] 当前正在使用的工作区图标 (实心圆)
+      "default": ""         // [修改] 其他工作区的图标 (空心圆)
+    }
+  },
+
+  "cpu": {
+    "interval": 5,           // 刷新频率：每 5 秒刷新一次
+    "format": " {usage}%",  // 默认显示：图标 + 使用率百分比
+    "format-alt": " {avg_frequency}GHz", // 点击后显示：图标 + 平均频率
+    "tooltip": false
+  },
+
+  "memory": {
+    "interval": 10,          // 刷新频率：每 10 秒刷新一次
+    "format": " {percentage}%", // 默认显示：图标 + 百分比
+    // 点击后显示：已用G / 总共G。 {used:0.1f} 代表保留1位小数
+    "format-alt": " {used:0.1f}G/{total:0.1f}G",
+    "tooltip-format": "内存: {used:0.1f}G / {total:0.1f}G\n交换: {swapUsed:0.1f}G"
+  },
+
+  // ========== 中间模块配置 ==========
+
+  "mpris": {
+    // 音乐播放器组件
+    "format": "{player_icon} {title}",         // 播放时显示：播放器图标 + 歌名
+    "format-paused": "{status_icon} <i>{title}</i>", // 暂停时显示：暂停图标 + 斜体歌名
+    "tooltip": false,         // 关闭悬浮提示
+    // [修改] 鼠标控制
+    "on-click": "playerctl play-pause",      // 左键：播放/暂停
+    "on-click-right": "playerctl next",      // 右键：下一首
+    "on-click-middle": "playerctl previous", // 中键(滚轮)：上一首
+    
+    // [修改] 播放器对应图标
+    "player-icons": {
+      "default": "",
+      "spotify": "",
+      "firefox": ""
+    },
+    "status-icons": {
+      "paused": "" // 暂停时的图标
+    },
+    "max-length": 25 // [修改] 歌名最大长度，太长会被截断
+  },
+
+  "clock": {
+    "format": " {:%H:%M}",             // 默认显示：时:分
+    "format-alt": " {:%Y年%m月%d日 %A}", // 点击后显示：年月日 星期几
+    "tooltip": false
+  },
+
+  // ========== 右侧模块配置 ==========
+
+  "tray": {
+    "icon-size": 16, // 托盘图标大小
+    "spacing": 8     // 图标间距
+  },
+
+  // 这是一个分组，实现了“点击箭头展开托盘”的功能
+  "group/tray-drawer": {
+    "orientation": "horizontal",
+    "drawer": {
+      "transition-duration": 500, // 展开动画时间 (毫秒)
+      "children-class": "tray-child",
+      "transition-left-to-right": false // 向左展开
+    },
+    "modules": [
+      "custom/tray-toggle", // 箭头按钮
+      "tray"                // 实际的托盘区域
+    ]
+  },
+
+  "custom/tray-toggle": {
+    "format": "  ", // 向左的箭头图标
+    "tooltip-format": "展开/收起托盘"
+  },
+
+  "pulseaudio": {
+    "format": "{icon} {volume}%",   // 格式：图标 + 音量%
+    "format-muted": "  静音",      // 静音时显示的文字
+    "format-icons": {
+      "headphone": "",             // 耳机图标
+      "default": ["", "", ""]   // 音量从小到大的三个图标
+    },
+    "on-click": "pavucontrol",      // 点击打开音量控制器
+    "scroll-step": 5                // 滚轮滚动一次调节 5% 音量
+  },
+
+  "backlight": {
+    "format": "{icon} {percent}%",
+    "format-icons": ["", "", "", "", "", "", "", "", ""], // 亮度等级图标
+    "scroll-step": 5
+  },
+
+  "network": {
+    "format-wifi": " {signalStrength}%", // WiFi连接时显示
+    "format-ethernet": "󰈀 {ipaddr}",      // 插网线时显示IP
+    "format-disconnected": " Disconnected", // 断网显示
+    "tooltip-format": "{ifname} via {gwaddr}"
+  },
+
+  "battery": {
+    "states": {
+      "good": 95,
+      "warning": 30, // 电量低于30%进入警告状态
+      "critical": 15 // 电量低于15%进入紧急状态 (会变红)
+    },
+    "format": "{icon} {capacity}%",
+    "format-charging": " {capacity}%", // 充电中显示插头图标
+    "format-icons": ["", "", "", "", ""] // 电池电量图标 (从空到满)
+  },
+
+  "custom/power": {
+    "format": "⏻", // 电源图标
+    "tooltip": false,
+    // [注意] 请确保这个脚本路径是正确的，否则点击没反应
+    "on-click": "/home/cat/.config/waybar/scripts/power.sh"
+  }
+}

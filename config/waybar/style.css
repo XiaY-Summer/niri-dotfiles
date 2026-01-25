@@ -1,0 +1,185 @@
+/* ========== 东京夜 (Tokyo Night) 极简交互版 ========== */
+
+/* [小白修改区] 配色变量定义
+   修改这里的颜色代码 (#xxxxxx) 可以改变整个状态栏的风格
+*/
+@define-color group-bg rgba(26, 27, 38, 0.9);   /* 胶囊背景色 (深蓝紫) */
+@define-color group-border rgba(65, 72, 104, 0.6); /* 胶囊边框色 */
+
+@define-color text-white #c0caf5;     /* 默认文字颜色 (淡白) */
+@define-color text-hover #ffffff;     /* 鼠标放上去时的文字颜色 (纯白) */
+
+/* 以下是各个模块的强调色 */
+@define-color accent-cyan #7dcfff;    /* 青色 (网络, 工作区激活) */
+@define-color accent-blue #7aa2f7;    /* 蓝色 (Logo, 音量) */
+@define-color accent-magenta #bb9af7; /* 紫色 (内存, 音乐) */
+@define-color accent-red #f7768e;     /* 红色 (关机, 警告, 断网) */
+@define-color accent-green #9ece6a;   /* 绿色 (CPU, 电池) */
+@define-color accent-orange #e0af68;  /* 橙色 (亮度, 低电量) */
+
+/* ========== 全局重置 (不用动) ========== */
+* {
+  border: none;
+  /* 字体设置：优先使用 Nerd Font 以支持图标 */
+  font-family: "JetBrainsMono Nerd Font", "Noto Sans SC", sans-serif;
+  font-size: 14px;      /* 全局字体大小 */
+  font-weight: 600;     /* 字重 (粗细) */
+  min-height: 0;
+}
+
+window#waybar {
+  background-color: transparent; /* 整个条最底层的背景必须透明 */
+}
+
+/* 条的外部容器设置 */
+window#waybar > box {
+  background: transparent;
+  padding: 4px 8px; /* [修改] 控制整个条距离屏幕边缘的上下间隙 */
+}
+
+/* ========== 胶囊容器样式 (左中右三个大块) ========== */
+.modules-left,
+.modules-center,
+.modules-right {
+  background: @group-bg;       /* 引用上面的深色背景变量 */
+  border: 1px solid @group-border;
+  border-radius: 20px;         /* [修改] 圆角大小，数值越大越圆 */
+  padding: 2px 10px;           /* 胶囊内部的留白 */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* 阴影效果 */
+}
+
+/* 中间胶囊稍微宽一点，为了放下长歌名 */
+.modules-center {
+  padding: 2px 16px;
+}
+
+/* ========== 通用模块样式 (所有小图标) ========== */
+/* 这里列出了所有模块的 ID，确保它们样式统一 */
+#custom-logo,
+#workspaces,
+#cpu,
+#memory,
+#mpris,
+#clock,
+#tray,
+#pulseaudio,
+#backlight,
+#network,
+#battery,
+#custom-tray-toggle,
+#custom-power {
+  background: transparent; /* 默认没有背景颜色 */
+  padding: 0 6px;          /* [修改] 每个小图标左右的间距 */
+  margin: 0 2px;           /* 模块之间的微小缝隙 */
+  color: @text-white;      /* 默认文字颜色 */
+  transition: all 0.3s ease; /* 颜色变化的动画时间，让变色更丝滑 */
+}
+
+/* ========== 核心交互：鼠标悬停 (Hover) 效果 ========== */
+/* 当鼠标移到这些模块上时发生的事情 */
+#workspaces button:hover,
+#custom-logo:hover,
+#cpu:hover,
+#memory:hover,
+#mpris:hover,
+#clock:hover,
+#pulseaudio:hover,
+#backlight:hover,
+#network:hover,
+#battery:hover,
+#custom-tray-toggle:hover {
+  background: transparent; /* 确保悬停时不显示背景方块 */
+  box-shadow: none;
+  color: @text-hover;      /* 文字变纯白 */
+  /* [视觉特效] 文字发光效果：可以在这里改光晕的颜色或大小 */
+  text-shadow: 0 0 6px rgba(255, 255, 255, 0.6); 
+}
+
+/* ========== 具体模块的默认颜色设置 ========== */
+
+/* 1. 左侧 Logo */
+#custom-logo {
+  color: @accent-blue;
+  font-size: 18px; /* Logo 可以大一点 */
+  padding-right: 12px;
+  margin-right: 4px;
+  border-right: 1px solid rgba(255, 255, 255, 0.1); /* Logo右边那条淡淡的竖线 */
+}
+
+/* 2. 工作区 (Niri) */
+#workspaces button {
+  padding: 0 5px;
+  color: #565f89; /* 未激活时是暗淡的蓝紫色 */
+  border-radius: 0;
+  transition: all 0.3s;
+}
+#workspaces button.active {
+  color: @accent-cyan; /* 激活状态变成青色 */
+  text-shadow: 0 0 5px rgba(125, 207, 255, 0.6); /* 激活时发光 */
+}
+#workspaces button.urgent {
+  color: @accent-red; /* 有紧急消息时变红 */
+}
+
+/* 3. 硬件监控 */
+#cpu { color: @accent-green; }   /* CPU 绿色 */
+#memory { color: @accent-magenta; } /* 内存 紫色 */
+
+/* 4. 音乐组件 */
+#mpris { color: @accent-magenta; }
+#mpris.paused { 
+    color: #565f89; /* 暂停时变暗 */
+    font-style: italic; /* 暂停时斜体 */
+}
+
+/* 5. 时钟 */
+#clock { font-size: 15px; font-weight: bold; color: @text-white; }
+
+/* 6. 右侧状态栏 */
+#custom-tray-toggle { color: @accent-blue; } /* 托盘箭头 */
+
+#pulseaudio { color: @accent-blue; }
+#pulseaudio.muted { color: #565f89; } /* 静音变暗 */
+
+#backlight { color: @accent-orange; }
+
+#network { color: @accent-cyan; }
+#network.disconnected { color: @accent-red; } /* 断网变红 */
+
+#battery { color: @accent-green; }
+#battery.charging { color: @accent-cyan; } /* 充电变青 */
+
+/* 电池低电量闪烁动画 */
+#battery.critical:not(.charging) {
+  color: @accent-red;
+  animation-name: blink;
+  animation-duration: 0.5s; /* 闪烁速度 */
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+/* ========== 关机按钮特例 ========== */
+/* 只有关机键在悬停时是红色发光，以示警告 */
+#custom-power:hover {
+  background: transparent;
+  color: @accent-red;
+  text-shadow: 0 0 8px rgba(247, 118, 142, 0.8); /* 强烈的红色光晕 */
+}
+
+/* 悬浮提示框 (Tooltip) 的样式 */
+tooltip {
+  background: #1a1b26; /* 深色背景 */
+  border: 1px solid @accent-blue;
+  border-radius: 8px;
+}
+tooltip label {
+  color: @text-white;
+}
+
+/* 定义闪烁动画的关键帧 */
+@keyframes blink {
+  to {
+    color: #1a1b26; /* 变黑 */
+    background-color: @accent-red; /* 背景变红 */
+  }
+}
