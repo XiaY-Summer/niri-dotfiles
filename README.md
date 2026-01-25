@@ -34,8 +34,8 @@
 运行提供的安装脚本：
 
 ```bash
-git clone <repository-url> niri_config
-cd niri_config
+git clone https://github.com/XiaY-Summer/niri-dotfiles.git
+cd niri-dotfiles
 chmod +x install.sh
 ./install.sh
 ```
