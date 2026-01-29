@@ -132,7 +132,7 @@
   },
 
   "network": {
-    "format-wifi": " {signalStrength}%", // WiFi连接时显示
+    "format-wifi": " {essid}", // WiFi连接时显示WiFi名称
     "format-ethernet": "󰈀 {ipaddr}",      // 插网线时显示IP
     "format-disconnected": " Disconnected", // 断网显示
     "tooltip-format": "{ifname} via {gwaddr}"
