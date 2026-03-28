@@ -269,8 +269,8 @@ layout {
 
 // This line starts waybar, a commonly used bar for Wayland compositors.
 spawn-at-startup "waybar"
-spawn-at-startup "swww-daemon"
-spawn-at-startup "sh -c 'sleep 1 && swww img ~/.config/niri/wallhaven/wall.jpg'"
+spawn-at-startup "awww-daemon"
+spawn-at-startup "sh -c 'sleep 1 && awww img ~/.config/niri/wallhaven/wall.jpg'"
 spawn-at-startup "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
 
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
