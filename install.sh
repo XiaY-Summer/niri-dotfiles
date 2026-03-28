@@ -189,7 +189,7 @@ install_packages() {
     echo
     
     # 分类显示
-    echo -e "  ${WHITE}核心组件:${NC} niri, kitty, waybar, wofi, mako, swww, swaylock"
+    echo -e "  ${WHITE}核心组件:${NC} niri, kitty, waybar, wofi, mako, awww, swaylock"
     echo -e "  ${WHITE}实用工具:${NC} fastfetch, nwg-look, yazi, firefox, pavucontrol"
     echo -e "  ${WHITE}系统工具:${NC} brightnessctl, playerctl, wireplumber, polkit-gnome"
     echo -e "  ${WHITE}字体:${NC} JetBrains Mono Nerd, Inconsolata Nerd, Noto CJK"
