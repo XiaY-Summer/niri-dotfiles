@@ -164,7 +164,7 @@ install_packages() {
         "waybar"
         "wofi"
         "mako"
-        "swww"
+        "awww"
         "swaylock"
         
         # 工具
